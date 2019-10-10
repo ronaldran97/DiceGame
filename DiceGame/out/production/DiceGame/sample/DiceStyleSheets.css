@@ -1,0 +1,31 @@
+.root {
+    -fx-background-color: #477148;
+}
+
+.label
+{
+    -fx-font-size: 14pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+.text
+{
+    -fx-font-size: 14pt;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-family: fantasy;
+}
+
+.button
+{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #FF0000;
+    -fx-border-style: solid;
+    -fx-font-weight: bolder;
+}
+
+.button:hover
+{
+    /*-fx-background-color: linear-gradient(#FF0000, #FF0000);*/
+    -fx-border-color: #FFFFFF;
+    -fx-highlight-text-fill: #718EA4;
+}
