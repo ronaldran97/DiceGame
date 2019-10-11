@@ -4,19 +4,15 @@ import javafx.application.Application;
 import javafx.geometry.*;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
 public class Main extends Application {
-
-
     //top section
     int overAllScore = 0;
     Label overallScoreLbl = new Label("Overall Score: ");
@@ -46,16 +42,142 @@ public class Main extends Application {
     ImageView dice1Five = new ImageView(dice1);
     ImageView dice1Six = new ImageView(dice1);
 
+    int oneNumber;
+
     public int randomDice(){
         int num = (int) Math.ceil(Math.random()*6);
         return num;
     }
 
+    void resetImages() {
+        dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice1" +
+                ".png"));
+        dice1Two.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice1" +
+                ".png"));
+        dice1Three.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice1" +
+                ".png"));
+        dice1Four.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice1" +
+                ".png"));
+        dice1Five.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice1" +
+                ".png"));
+        dice1Six.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice1" +
+                ".png"));
+    }
+
+    void imageStuff() {
+        int one = randomDice();
+        oneNumber = one;
+        System.out.println(oneNumber);
+        int two = randomDice();
+        int three = randomDice();
+        int four = randomDice();
+        int five = randomDice();
+        int six = randomDice();
+
+        dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                one + ".png"));
+        dice1Two.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                two + ".png"));
+        dice1Three.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                three + ".png"));
+        dice1Four.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                four + ".png"));
+        dice1Five.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                five + ".png"));
+        dice1Six.setImage(new Image("file:/Users/ronaldtran/" +
+                "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                six + ".png"));
+
+        //makes the image clickable
+        dice1Image.setOnMouseClicked(imageEvent -> {
+            dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
+                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice"+
+                    one +"held.png"));
+        });
+
+        dice1Two.setOnMouseClicked(imageEvent -> {
+            dice1Two.setImage(new Image("file:/Users/ronaldtran/" +
+                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                    two + "held.png"));
+        });
+
+        dice1Three.setOnMouseClicked(imageEvent -> {
+            dice1Three.setImage(new Image("file:/Users/ronaldtran/" +
+                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                    three + "held.png"));
+        });
+
+        dice1Four.setOnMouseClicked(imageEvent -> {
+            dice1Four.setImage(new Image("file:/Users/ronaldtran/" +
+                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                    four + "held.png"));
+        });
+
+        dice1Five.setOnMouseClicked(imageEvent -> {
+            dice1Five.setImage(new Image("file:/Users/ronaldtran/" +
+                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                    five + "held.png"));
+        });
+
+        dice1Six.setOnMouseClicked(imageEvent -> {
+            dice1Six.setImage(new Image("file:/Users/ronaldtran/" +
+                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
+                    six + "held.png"));
+        });
+    }
 
 
-    @Override
-    public void start(Stage primaryStage) throws Exception{
+    void restart(Stage primaryStage) {
+        StartGame(primaryStage);
+        resetImages();
+    }
+
+
+    /*
+    what happens when you click the button
+        1. number of rolls will decrement (DONE)
+        2. the clicked dice should stay the way it is (held)
+        3. Score will change accordingly
+        4. Reset everything (DONE)
+        5. Change images randomly (DONE)
+    */
+    void rollingOfTheDice(Stage primaryStage) {
+        rollDice.setOnAction(event -> {
+            rolls--;
+            numRoles.setText("" + rolls);
+
+            imageStuff();
+
+            if (rolls == 0) {
+                rollDice.setText("Play Again");
+
+                rollDice.setOnAction(event1 -> {
+                    rollDice.setText("Roll Dice");
+                    rolls = 3;
+                    restart(primaryStage);
+                });
+            }
+        });
+    }
+
+
+    void StartGame(Stage primaryStage) {
+
         primaryStage.setTitle("Dice Game");
+
+        //where the dice roll
+        rollingOfTheDice(primaryStage);
 
         //dice 1 image
         Image dice1 = new Image("file:/Users/ronaldtran/Documents" +
@@ -104,111 +226,27 @@ public class Main extends Application {
         remainRollsBox.setAlignment(Pos.CENTER);
         remainRollsBox.setPadding(new Insets(10));
 
+        //gridpane that holds everything
         GridPane mainGridPane = new GridPane();
         mainGridPane.add(OverallScoreBox, 0, 0);
         mainGridPane.add(diceBox, 0, 1);
         mainGridPane.add(buttonBox, 0, 2);
         mainGridPane.add(roundScoreBox, 0, 3);
         mainGridPane.add(remainRollsBox, 0, 4);
-
         mainGridPane.setAlignment(Pos.CENTER);
         mainGridPane.setPadding(new Insets(10));
-
-
-        /*what happens when you click the button
-        1. number of rolls will decrement (DONE)
-        2. the clicked dice should stay the way it is (held)
-        3. Score will change accordingly
-        4. Reset everything
-        5. Change images randomly
-         */
-        rollDice.setOnAction(event -> {
-            rolls--;
-            numRoles.setText("" + rolls);
-
-            int one = randomDice();
-            int two = randomDice();
-            int three = randomDice();
-            int four = randomDice();
-            int five = randomDice();
-            int six = randomDice();
-
-
-            dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
-                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                    one + ".png"));
-            dice1Two.setImage(new Image("file:/Users/ronaldtran/" +
-                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                    two + ".png"));
-            dice1Three.setImage(new Image("file:/Users/ronaldtran/" +
-                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                    three + ".png"));
-            dice1Four.setImage(new Image("file:/Users/ronaldtran/" +
-                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                    four + ".png"));
-            dice1Five.setImage(new Image("file:/Users/ronaldtran/" +
-                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                    five + ".png"));
-            dice1Six.setImage(new Image("file:/Users/ronaldtran/" +
-                    "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                    six + ".png"));
-
-            //makes the image clickable
-            dice1Image.setOnMouseClicked(imageEvent -> {
-                dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
-                        "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice"+
-                        one +"held.png"));
-            });
-
-            dice1Two.setOnMouseClicked(imageEvent -> {
-                dice1Two.setImage(new Image("file:/Users/ronaldtran/" +
-                        "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                        two + "held.png"));
-            });
-
-            dice1Three.setOnMouseClicked(imageEvent -> {
-                dice1Three.setImage(new Image("file:/Users/ronaldtran/" +
-                        "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                        three + "held.png"));
-            });
-
-            dice1Four.setOnMouseClicked(imageEvent -> {
-                dice1Four.setImage(new Image("file:/Users/ronaldtran/" +
-                        "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                        four + "held.png"));
-            });
-
-            dice1Five.setOnMouseClicked(imageEvent -> {
-                dice1Five.setImage(new Image("file:/Users/ronaldtran/" +
-                        "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                        five + "held.png"));
-            });
-
-            dice1Six.setOnMouseClicked(imageEvent -> {
-                dice1Six.setImage(new Image("file:/Users/ronaldtran/" +
-                        "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
-                        six + "held.png"));
-            });
-
-            if (rolls == 0) {
-//                rollDice.setDisable(true);
-
-                rollDice.setText("Play Again");
-                Alert myAlert = new Alert(Alert.AlertType.INFORMATION,
-                        "You are out of rolls!");
-                myAlert.show();
-            }
-
-        });
-
-        //debugging
-//        mainGridPane.setGridLinesVisible(true);
 
         Scene scene = new Scene(mainGridPane);
         scene.getStylesheets().add("file:/Users/ronaldtran/Documents/" +
                 "GUIS/DiceGame/src/sample/DiceStyleSheets.css");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+
+    @Override
+    public void start(Stage primaryStage) throws Exception{
+        StartGame(primaryStage);
     }
 
 
