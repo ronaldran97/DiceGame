@@ -46,18 +46,11 @@ public class Main extends Application {
 
     int oneNumber;
 
-    class rollingDiceHandler implements EventHandler<ActionEvent> {
-
-        @Override
-        public void handle(ActionEvent event) {
-          
-        }
-    }
-
     public int randomDice(){
         int num = (int) Math.ceil(Math.random()*6);
         return num;
     }
+
 
     void resetImages() {
         dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
@@ -80,6 +73,8 @@ public class Main extends Application {
                 ".png"));
     }
 
+
+    //how can I check the image to see if it is held?
     void imageStuff() {
         int one = randomDice();
         int two = randomDice();
@@ -88,7 +83,7 @@ public class Main extends Application {
         int five = randomDice();
         int six = randomDice();
 
-      dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
+        dice1Image.setImage(new Image("file:/Users/ronaldtran/" +
                 "Documents/GUIS/DiceGame/src/sample/DiceImages/Dice" +
                 one + ".png"));
         dice1Two.setImage(new Image("file:/Users/ronaldtran/" +
@@ -187,6 +182,10 @@ public class Main extends Application {
                       six + ".png"));
             });
         });
+
+        Image currentImageOne = dice1Image.getImage();
+
+
     }
 
 
